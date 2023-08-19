@@ -51,12 +51,15 @@ router.delete('/:postId/delete', authMiddleware, async (req, res) => {
     if (!post) {
       return res.status(404).json({ message: 'Post not found' });
     }
-
-    if (post.author.toString() !== req.user._id) {
+// console.log(req.user._id,post.author.toString())
+    if (post.author.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: 'Unauthorized to delete this post' });
     }
 
-    await post.remove();
+   const deletedNote = await Post.findOneAndDelete({ _id:postId, author: req.user._id })
+    if (!deletedNote) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
     res.status(200).json({ message: 'Post deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: 'An error occurred' });

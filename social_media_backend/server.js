@@ -10,6 +10,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/users', userRoutes);
+
 app.get("/",async(req,res)=>{
 try {
    res.setHeader('Content-Type', 'text/html');
@@ -56,7 +57,7 @@ try {
 app.listen(4500,async()=>{
 try {
    await connection;
-   console.log("connected to the DB and server running at http://localhost:4500");
+   console.log("connected to the DB and server running at this link http://localhost:4500");
 } catch (error) {
    console.log(error.message)
 }
