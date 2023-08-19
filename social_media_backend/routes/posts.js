@@ -3,7 +3,15 @@ const authMiddleware = require('../middleware/authMiddleware');
 const Post = require('../models/Post');
 
 const router = express.Router();
-
+router.get("/",async(req,res)=>{
+  try {
+   const post= await Post.find();
+  //  console.log(post)
+    res.status(200).json(post)
+  } catch (error) {
+    res.send(404).json("error", error.message)
+  }
+})
 // Create a new post
 router.post('/create', authMiddleware, async (req, res) => {
   try {
